@@ -17,7 +17,6 @@ def data_cleaning(data):#clean data from missing values
     print(count_percent.shape)
     print(count_percent)
     #so here we are calculating the mode of the data since we have calculated the number of missing data
-    mode_data=data.mode()#calulates the mode of the data in each column
     if (count_percent>50).any():#if the misssing data of the column is more than 50% drop the column
         data=data.drop(columns=count_percent[count_percent>50].index)
     else:#if the missing data is less than 50% impute the missing data with the mode of the data
@@ -26,7 +25,9 @@ def data_cleaning(data):#clean data from missing values
                 data[column]=data[column].fillna(data[column].mode()[0])#we use [0] because there may me more than one mode
             if data[column].dtype=='int64' or data[column].dtype=='float64':
                 data[column]=data[column].fillna(data[column].mean())
-    return data
+    count_2=data.isnull().sum()
+    print('cleaned data', count_2)
+    return count_2
 def identify_outliers(data):
     #this function identifies the outliers in the data and removes them
     data=data_cleaning(data)#calling data_cleaning function to prepare the data
