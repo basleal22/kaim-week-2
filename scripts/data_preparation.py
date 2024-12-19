@@ -26,8 +26,6 @@ def data_cleaning(data):#clean data from missing values
                 data[column]=data[column].fillna(data[column].mode()[0])#we use [0] because there may me more than one mode
             if data[column].dtype=='int64' or data[column].dtype=='float64':
                 data[column]=data[column].fillna(data[column].mean())
-    count_2=data.isnull().sum()
-    print('cleaned data', count_2)
     return data
 def identify_outliers(data):
     #this function identifies the outliers in the data and removes them
