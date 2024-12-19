@@ -5,6 +5,7 @@ import seaborn as sns
 
 def data_extraction(data):
     data=pd.read_csv(data)
+    return data
 #this function calculates the percentage of missing data in each column
 def get_missing_data_percentage(data):
     count = data.isnull().sum()
