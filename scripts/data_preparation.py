@@ -14,8 +14,6 @@ def get_missing_data_percentage(data):
 
 def data_cleaning(data):#clean data from missing values
     count_percent = get_missing_data_percentage(data)#calling get_missing_data_percentage function
-    print(count_percent.shape)
-    print(count_percent)
     #so here we are calculating the mode of the data since we have calculated the number of missing data
     if (count_percent>50).any():#if the misssing data of the column is more than 50% drop the column
         data=data.drop(columns=count_percent[count_percent>50].index)
