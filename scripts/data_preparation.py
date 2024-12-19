@@ -21,7 +21,7 @@ def data_cleaning(data):#clean data from missing values
         for column in data.columns:
             if data[column].dtype=='object':
                 data[column]=data[column].fillna(data[column].mode()[0])#we use [0] because there may me more than one mode
-            if data[column].dtype=='int64' or data[column].dtype=='float64':
+            elif data[column].dtype=='int64' or data[column].dtype=='float64':
                 data[column]=data[column].fillna(data[column].mean())
     count_2=data.isnull().sum()
     print('cleaned data', count_2)
