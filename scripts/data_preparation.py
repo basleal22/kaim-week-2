@@ -8,13 +8,11 @@ def data_extraction(data):
     return data
 #this function calculates the percentage of missing data in each column
 def get_missing_data_percentage(data):
-    data=data_extraction(data)
     count = data.isnull().sum()
     count_percent = (count/len(data))*100
     return count_percent
 
 def data_cleaning(data):#clean data from missing values
-    data=data_extraction(data)
     count_percent = get_missing_data_percentage(data)#calling get_missing_data_percentage function
     print(count_percent.shape)
     print(count_percent)
