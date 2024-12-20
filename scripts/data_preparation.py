@@ -37,6 +37,9 @@ def identify_outliers(data):
     data_mean = numeric_data.mean() #mean of each column
     data = np.where((numeric_data<lower_bound) |(numeric_data>upper_bound), data_mean,numeric_data)#we use the where function to identify the outliers and replace them with the mean of the data
     #print outliers in our data before and after removing the outliers
-    #for column in numeric_data.columns:
-     #   column
-    return data
+    modified_data = data.copy()
+    for column in numeric_data.columns:
+        # Replace outliers with mean for each column
+        mask = (numeric_data[column] < lower_bound[column]) | (numeric_data[column] > upper_bound[column])
+        modified_data.loc[mask, column] = data_mean[column]#mask is a boolean series with the same length as number of rows
+    return modified_data
