@@ -28,9 +28,19 @@ def segment_data(data):
     aggregated_data=data.sort_values(by='session_duration',ascending=False)
     #create a new column for decile class
     aggregated_data['decile_class']=pd.qcut(aggregated_data['session_duration'],10,labels=False)+1#segments the users into 10 equal sized decile classes
-    #calculate total volume of upload and download for each class and create a new column for it
-    aggregated_data['total_data']=aggregated_data[['total_download','total_upload']].sum(axis=1)#sum(axis=1) because axis =1 is for rows
     #group by decile class and calculate the total data per class
-    aggregated_data=aggregated_data.groupby('decile_class').agg(total_data_per_decile=('total_data','sum')).reset_index()
-    top_decile=aggregated_data[aggregated_data['decile_class']>=5]
-    return top_decile
+    aggregated_data=aggregated_data.groupby('decile_class').agg(total_data_per_decile=('total_data_volume','sum')).reset_index()
+    top_decile=aggregated_data[aggregated_data['decile_class']>=5]#higher decile indicated higher data usage
+    return top_decile#represents heavy users
+def Non_graphical_univariate_analysis(data): #we will be using non graphical analysis
+    #calculate the mean,median,mode,standard deviation, variance,range,min,max of the total data
+    dispersed_data={'Min':data['total_data_volume'].min(),
+                    'Max':data['total_data_volume'].max(),
+                    'Mean':data['total_data_volume'].mean(),
+                    'Median':data['total_data_volume'].median(),
+                    'Mode':data['total_data_volume'].mode(),
+                    'Standard Deviation':data['total_data_volume'].std(),
+                    'Variance':data['total_data_volume'].var(),
+                    'Range':data['total_data_volume'].max()-data['total_data_volume'].min(),
+                    }
+    return dispersed_data
