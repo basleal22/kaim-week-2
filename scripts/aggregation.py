@@ -45,5 +45,5 @@ def Non_graphical_univariate_analysis(data): #we will be using non graphical ana
                     'Range':data['total_data_volume'].max()-data['total_data_volume'].min(),
                     }
     #convert the dictionary to a dataframe
-    dispersed_data=pd.DataFrame(dispersed_data,index=['total_data_volume'])#used index=['total_data_volume'] to create a single row dataframe
+    dispersed_data=pd.DataFrame(dispersed_data)#used index=['total_data_volume'] to create a single row dataframe
     return dispersed_data
