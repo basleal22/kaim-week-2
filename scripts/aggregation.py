@@ -72,7 +72,7 @@ def correlation_analysis(data):
     #calculate the correlation between the total data volume and the other variables(social medias)
     applications=['Youtube','Social Media','Gaming','Email','Google','Other']
     #create a correlation matrix
-    correlation_matrix=data[[applications]+['total_data_volume']].corr()
+    correlation_matrix=data[applications+['total_data_volume']].corr()
     #plot the correlation matrix
     return correlation_matrix
     #plt.figure(figsize=(10,6))
