@@ -34,6 +34,7 @@ def segment_data(data):
     return top_decile#represents heavy users
 def Non_graphical_univariate_analysis(data): #we will be using non graphical analysis
     #calculate the mean,median,mode,standard deviation, variance,range,min,max of the total data
+    #created the dictionary to store the data
     dispersed_data={'Min':data['total_data_volume'].min(),
                     'Max':data['total_data_volume'].max(),
                     'Mean':data['total_data_volume'].mean(),
@@ -43,4 +44,6 @@ def Non_graphical_univariate_analysis(data): #we will be using non graphical ana
                     'Variance':data['total_data_volume'].var(),
                     'Range':data['total_data_volume'].max()-data['total_data_volume'].min(),
                     }
+    #convert the dictionary to a dataframe
+    dispersed_data=pd.DataFrame(dispersed_data,index=[0])#used index=[0] to create a single row dataframe
     return dispersed_data
