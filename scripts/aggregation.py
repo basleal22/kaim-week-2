@@ -32,4 +32,5 @@ def segment_data(data):
     aggregated_data['total_data']=aggregated_data[['total_download','total_upload']].sum(axis=1)#sum(axis=1) because axis =1 is for rows
     #group by decile class and calculate the total data per class
     aggregated_data=aggregated_data.groupby('decile_class').agg(total_data_per_decile=('total_data','sum')).reset_index()
-    return aggregated_data
+    top_decile=aggregated_data[aggregated_data['decile_class']>=5]
+    return top_decile
