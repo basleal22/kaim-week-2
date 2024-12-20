@@ -17,7 +17,7 @@ def data_aggregation(data):
                                          total_google_ul=('Google UL (Bytes)','sum'),
                                          total_other_dl=('Other DL (Bytes)','sum'),
                                          total_other_ul=('Other UL (Bytes)','sum'),
-                                         )
+                                         ).reset_index()
         #summing the total data volume
     aggregated_data['total_download']=aggregated_data[['total_youtube_dl','total_social_media_dl','total_gaming_dl','total_email_dl','total_google_dl','total_other_dl']].sum(axis=1)
     aggregated_data['total_upload']=aggregated_data[['total_youtube_ul','total_social_media_ul','total_gaming_ul','total_email_ul','total_google_ul','total_other_ul']].sum(axis=1)
