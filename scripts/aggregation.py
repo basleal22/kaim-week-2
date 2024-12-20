@@ -27,7 +27,7 @@ def segment_data(data):
     #sort the data by session duration
     aggregated_data=data.sort_values(by='session_duration',ascending=False)
     #create a new column for decile class
-    aggregated_data['decile_class']=pd.qcut(aggregated_data['session_duration'],10,label=False)+1#segments the users into 10 equal sized decile classes
+    aggregated_data['decile_class']=pd.qcut(aggregated_data['session_duration'],10,labels=False)+1#segments the users into 10 equal sized decile classes
     #calculate total volume of upload and download for each class and create a new column for it
     aggregated_data['total_data']=aggregated_data[['total_download','total_upload']].sum(axis=1)#sum(axis=1) because axis =1 is for rows
     #group by decile class and calculate the total data per class
