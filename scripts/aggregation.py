@@ -70,7 +70,11 @@ def graphical_univariate_analysis(data):
     plt.show()
 def correlation_analysis(data):
     #calculate the correlation between the total data volume and the other variables(social medias)
-    applications=['Youtube','Social Media','Gaming','Email','Google','Other']
+    applications=['total_youtube_dl',
+       'total_youtube_ul', 'total_social_media_dl', 'total_social_media_ul',
+       'total_gaming_dl', 'total_gaming_ul', 'total_email_dl',
+       'total_email_ul', 'total_google_dl', 'total_google_ul',
+       'total_other_dl', 'total_other_ul']
     #create a correlation matrix
     correlation_matrix=data[applications+['total_data_volume']].corr()
     #plot the correlation matrix
