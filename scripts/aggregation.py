@@ -68,3 +68,12 @@ def graphical_univariate_analysis(data):
     plt.title('Dispersion Parameters of Total Data Volume')
     # Show plot
     plt.show()
+def correlation_analysis(data):
+    #calculate the correlation between the total data volume and the other variables(social medias)
+    applications=['Youtube','Social Media','Gaming','Email','Google','Other']
+    #create a correlation matrix
+    correlation_matrix=data[[applications]+['total_data_volume']].corr()
+    #plot the correlation matrix
+    return correlation_matrix
+    #plt.figure(figsize=(10,6))
+    #sns.scatterplot(x='total_data_volume')
