@@ -45,5 +45,14 @@ def Non_graphical_univariate_analysis(data): #we will be using non graphical ana
                     'Range':data['total_data_volume'].max()-data['total_data_volume'].min(),
                     }
     #convert the dictionary to a dataframe
-    dispersed_data=pd.DataFrame(dispersed_data,index=[0])#used index=['total_data_volume'] to create a single row dataframe
+    dispersed_data=pd.DataFrame(dispersed_data,index=[0])#used index=['0'] to create a single row dataframe
     return dispersed_data
+def graphical_univariate_analysis(data):
+    #plot and visualize the distribution,spread and central tendency of individual variables
+    #using seaborn boxplot
+    plt.figure(figsize=(8,6))
+    sns.boxplot(data['total_data_volume'],color='red')
+    plt.title('plot of total data volume')
+    plt.xlabel('Total data volume')
+    plt.ylabel('Frequency')
+    plt.show()
