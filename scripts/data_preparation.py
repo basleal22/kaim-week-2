@@ -27,14 +27,14 @@ def data_cleaning(data):#clean data from missing values
     return data
 def identify_outliers(data):
     #this function identifies the outliers in the data and removes them
-    data_outlined=data_cleaning(data)#calling data_cleaning function to prepare the data
-    q1=data_outlined.quantile(0.25)#we use the quantile function in pandas to calculate the 25th percentile
-    q3=data_outlined.quantile(0.75)#we use the 75th percentile
+    #data_outlined=data_cleaning(data)#calling data_cleaning function to prepare the data
+    q1=data.quantile(0.25)#we use the quantile function in pandas to calculate the 25th percentile
+    q3=data.quantile(0.75)#we use the 75th percentile
     IQR = q3-q1#we calculate the interquartile
     lower_bound = q1-1.5*IQR#we calculate the lower bound and use 1.5 number because it is the most common number used to identify outliers
     upper_bound = q3+1.5*IQR#we calculate the upper bound
     data_mean = data.mean() #mean of each column
-    outliers = np.where((data<lower_bound) |(data>upper_bound), data_mean,data)#we use the where function to identify the outliers and replace them with the mean of the data
+    data = np.where((data<lower_bound) |(data>upper_bound), data_mean,data)#we use the where function to identify the outliers and replace them with the mean of the data
     #print outliers in our data before and after removing the outliers
     
-    return outliers
+    return data
