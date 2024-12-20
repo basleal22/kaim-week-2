@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
 def data_aggregation(data):
     aggregated_data=data.groupby('IMSI').agg(number_of_sessions=('Bearer Id','count'),
                                          session_duration=('Dur. (ms)','sum'),
@@ -79,5 +81,18 @@ def correlation_analysis(data):
     correlation_matrix=data[applications+['total_data_volume']].corr()
     #plot the correlation matrix
     return correlation_matrix
-    #plt.figure(figsize=(10,6))
-    #sns.scatterplot(x='total_data_volume')
+def PCA_analysis(data):
+    #perform PCA analysis on the data
+    #standardize the data
+    features=['total_youtube_dl', 'total_youtube_ul', 'total_social_media_dl',
+            'total_social_media_ul', 'total_gaming_dl', 'total_gaming_ul',
+            'total_email_dl', 'total_email_ul', 'total_google_dl',
+            'total_google_ul', 'total_other_dl', 'total_other_ul', 'total_data_volume']
+    scale=StandardScaler()
+    standardized_data=scale.fit_transform(data[features])
+    #perform PCA
+    pca = PCA(n_components=2)#retain 95% of the variance
+    principal_components=pca.fit_transform(standardized_data)
+    #convert the principal components to a dataframe
+    principal_components=pd.DataFrame(principal_components,columns=['principal_component_1','principal_component_2'])
+    return principal_components
