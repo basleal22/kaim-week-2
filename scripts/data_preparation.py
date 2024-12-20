@@ -35,8 +35,6 @@ def identify_outliers(data):
     lower_bound = q1-1.5*IQR#we calculate the lower bound and use 1.5 number because it is the most common number used to identify outliers
     upper_bound = q3+1.5*IQR#we calculate the upper bound
     data_mean = numeric_data.mean() #mean of each column
-    data = np.where((numeric_data<lower_bound) |(numeric_data>upper_bound), data_mean,numeric_data)#we use the where function to identify the outliers and replace them with the mean of the data
-    #print outliers in our data before and after removing the outliers
     modified_data = data.copy()
     for column in numeric_data.columns:
         # Replace outliers with mean for each column
