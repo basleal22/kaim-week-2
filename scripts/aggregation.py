@@ -50,9 +50,24 @@ def Non_graphical_univariate_analysis(data): #we will be using non graphical ana
 def graphical_univariate_analysis(data):
     #plot and visualize the distribution,spread and central tendency of individual variables
     #using seaborn boxplot
-    plt.figure(figsize=(8,6))
-    sns.boxplot(data['total_data_volume'],color='red')
-    plt.title('plot of total data volume')
-    plt.xlabel('Total data volume')
-    plt.ylabel('Frequency')
+    dispersed_data = {
+    'Min': data['total_data_volume'].min(),
+    'Max': data['total_data_volume'].max(),
+    'Mean': data['total_data_volume'].mean(),
+    'Median': data['total_data_volume'].median(),
+    'Mode': data['total_data_volume'].mode()[0],  # Taking the first mode value
+    'Standard Deviation': data['total_data_volume'].std(),
+    'Variance': data['total_data_volume'].var(),
+    'Range': data['total_data_volume'].max() - data['total_data_volume'].min()}
+    #convert the dictionary to a dataframe
+    dispersed_data=pd.DataFrame(dispersed_data,index=[0])#used index=['0'] to create a single row dataframe
+    # Create a bar plot
+    plt.figure(figsize=(10,6))
+    plt.bar(dispersed_data.keys(), dispersed_data.values(), color='skyblue', edgecolor='black')
+
+    # Add labels and title
+    plt.xlabel('Statistical Measures')
+    plt.ylabel('Value')
+    plt.title('Dispersion Parameters of Total Data Volume')
+    # Show plot
     plt.show()
