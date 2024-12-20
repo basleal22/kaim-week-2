@@ -23,9 +23,8 @@ def data_cleaning(data):#clean data from missing values
                 data[column]=data[column].fillna(data[column].mode()[0])#we use [0] because there may me more than one mode
             elif data[column].dtype=='int64' or data[column].dtype=='float64':
                 data[column]=data[column].fillna(data[column].mean())
-    count_2=data.isnull().sum()
-    print('cleaned data', count_2)
-    return count_2
+    #count_2=data.isnull().sum()
+    return data
 def identify_outliers(data):
     #this function identifies the outliers in the data and removes them
     data_outlined=data_cleaning(data)#calling data_cleaning function to prepare the data
@@ -37,8 +36,5 @@ def identify_outliers(data):
     data_mean = data.mean() #mean of each column
     outliers = np.where((data<lower_bound) |(data>upper_bound), data_mean,data)#we use the where function to identify the outliers and replace them with the mean of the data
     #print outliers in our data before and after removing the outliers
-    print('data before removing outliers', data.head())
-    print('data after removing outliers', outliers.head())
-
-
+    
     return outliers
