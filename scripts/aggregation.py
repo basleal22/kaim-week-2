@@ -59,12 +59,9 @@ def graphical_univariate_analysis(data):
     'Standard Deviation': data['total_data_volume'].std(),
     'Variance': data['total_data_volume'].var(),
     'Range': data['total_data_volume'].max() - data['total_data_volume'].min()}
-    #convert the dictionary to a dataframe
-    dispersed_data=pd.DataFrame(dispersed_data,index=[0])#used index=['0'] to create a single row dataframe
     # Create a bar plot
     plt.figure(figsize=(10,6))
     plt.bar(dispersed_data.keys(), dispersed_data.values(), color='skyblue', edgecolor='black')
-
     # Add labels and title
     plt.xlabel('Statistical Measures')
     plt.ylabel('Value')
