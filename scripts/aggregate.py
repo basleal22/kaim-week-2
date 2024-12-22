@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler 
 from sklearn.cluster import KMeans
+import seaborn as sns
 def __init__(self,data):
     self.data=data
     return data
@@ -34,4 +35,22 @@ def kmean_normalized(data):
     data['engagement group']=kmeans.fit_predict(scaled_df)
     sorted_dur = data.sort_values('session_duration',ascending=False)
     return data,sorted_dur
+def compute_cluster_stats(data):
+    metrics=['Session count','session_duration','total_traffic (Bytes)']
+    #group data with engagement group and compute statistics
+    cluster_stats=data.groupby('engagement group')[metrics].agg(['min','max','mean','sum']).reset_index()
+    
+    return cluster_stats
+def visualize_cluster_stats(data):
+    #visualize clusters
+    cluster_stats_melted = data.melt(id_vars='engagement group', var_name='Metric', value_name='Value')
+
+    # Visualize metrics
+    plt.figure(figsize=(16, 8))
+    sns.barplot(data=cluster_stats_melted, x='engagement group', y='Value', hue='Metric')
+    plt.title('Engagement Metrics by Cluster')
+    plt.ylabel('Value')
+    plt.xlabel('Engagement Group')
+    plt.legend(title='metric')
+    plt.show()
 
