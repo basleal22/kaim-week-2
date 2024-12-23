@@ -53,4 +53,103 @@ def visualize_cluster_stats(data):
     plt.xlabel('Engagement Group')
     plt.legend(title='metric')
     plt.show()
+def application_traffic(data):
+    # Define applications and their respective traffic columns
+    apps = {
+        "Netflix": ["Netflix DL (Bytes)", "Netflix UL (Bytes)"],
+        "Youtube": ["Youtube DL (Bytes)", "Youtube UL (Bytes)"],
+        "Gaming": ["Gaming DL (Bytes)", "Gaming UL (Bytes)"]
+    }
+    
+    aggregated = {}
+    pd_data=pd.DataFrame()
+    
+    # Aggregate the traffic for each application
+    for app_name, cols in apps.items():
+        # Calculate total traffic for the application
+        data[f'{app_name} Total Traffic (Bytes)'] = data[cols].sum(axis=1)
+        
+        # Group by user and sum the total traffic
+        aggregated[app_name] = (
+            data.groupby("MSISDN/Number")[f'{app_name} Total Traffic (Bytes)']
+            .sum()
+            .reset_index()
+            .sort_values(by=f'{app_name} Total Traffic (Bytes)', ascending=False)
+        )
+
+    pd_data = pd.concat(
+        [df.assign(Application=app) for app, df in aggregated.items()],
+        ignore_index=True
+    )
+    return pd_data
+def top_10_users_per_app(data):
+    # Define applications and their respective traffic columns
+    apps = {
+        "Netflix": [col for col in data.columns if "Netflix" in col],
+        "Youtube": [col for col in data.columns if "Youtube" in col],
+        "Gaming": [col for col in data.columns if "Gaming" in col],
+    }
+
+    top_users = {}
+
+    for app_name, cols in apps.items():
+        if not cols:
+            print(f"Warning: No columns found for {app_name}")
+            continue
+
+        # Calculate total traffic for the application
+        data[f'{app_name} Total Traffic (Bytes)'] = data[cols].sum(axis=1)
+
+        # Group by user and sum traffic
+        aggregated_data = (
+            data.groupby("MSISDN/Number")[f'{app_name} Total Traffic (Bytes)']
+            .sum()
+            .reset_index()
+        )
+
+        # Sort by traffic and take top 10
+        top_users[app_name] = aggregated_data.sort_values(
+            by=f'{app_name} Total Traffic (Bytes)', ascending=False
+        ).head(10)
+
+    return top_users
+def plot_top_3_apps(data):
+    apps = {
+        "Netflix": ["Netflix DL (Bytes)", "Netflix UL (Bytes)"],
+        "Youtube": ["Youtube DL (Bytes)", "Youtube UL (Bytes)"],
+        "Gaming": ["Gaming DL (Bytes)", "Gaming UL (Bytes)"]
+    }
+    
+    # Calculate total traffic for each app
+    total_traffic_app = {}
+    for app_name, cols in apps.items():
+        data[f"{app_name} Total traffic (bytes)"] = data[cols].sum(axis=1)
+        
+        # Sum the traffic for all users and store it in the dictionary
+        total_traffic_app[app_name] = data[f"{app_name} Total traffic (bytes)"].sum()
+    
+    # Sort applications by total traffic in descending order and get the top 3
+    sorted_apps = sorted(total_traffic_app.items(), key=lambda x: x[1], reverse=True)
+    top_3_apps = sorted_apps[:3]
+    
+    # Extract app names and their traffic for plotting
+    app_names, app_traffic = zip(*top_3_apps)
+    
+    # Plot the data
+    plt.figure(figsize=(10,6))
+    plt.bar(app_names, app_traffic, color=['blue', 'green', 'orange'])
+    plt.title('Top 3 Most Used Applications')
+    plt.xlabel('Application')
+    plt.ylabel('Total Traffic (bytes)')
+    plt.show()
+
+
+
+
+
+
+
+
+
+
 
