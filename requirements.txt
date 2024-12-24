@@ -1,5 +1,6 @@
-pandas
 numpy
+pandas
+tensorflow
 matplotlib
 scikit-learn
 seaborn
