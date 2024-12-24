@@ -115,7 +115,7 @@ def performance_clusters(data):
     data['Cluster'] = kmeans.fit_predict(normalized_features)
 
     # Summarize each cluster
-    cluster_summary = data.groupby('Cluster')[['Avg_Throughput_DL', 'Avg_Throughput_UL', 'Avg RTT']].mean()
+    cluster_summary = data.groupby('Cluster')[['Avg_Throughput_DL', 'Avg_Throughput_UL', 'Avg RTT']].mean().reset_index()
 
     return cluster_summary
 
